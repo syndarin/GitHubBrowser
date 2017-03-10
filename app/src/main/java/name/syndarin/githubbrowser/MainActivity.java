@@ -2,19 +2,17 @@ package name.syndarin.githubbrowser;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.EditText;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
-import java.io.IOException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
@@ -27,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.edit_username_input)
     EditText editSearchInput;
+
+    @BindView(R.id.recycler_search_results)
+    RecyclerView recyclerSearchResults;
 
     OkHttpClient okHttpClient;
 

@@ -2,22 +2,23 @@ package name.syndarin.githubbrowser;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.EditText;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.google.gson.Gson;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Function;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import name.syndarin.githubbrowser.adapters.SearchResultAdapter;
+import name.syndarin.githubbrowser.entities.UserSearchResult;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,35 +42,24 @@ public class MainActivity extends AppCompatActivity {
             .addNetworkInterceptor(new StethoInterceptor())
             .build();
 
+        recyclerSearchResults.setLayoutManager(new LinearLayoutManager(this));
+
+        Gson gson = new Gson();
+
         RxTextView.textChanges(editSearchInput)
-            .subscribeOn(Schedulers.io())
-
-            .filter(input -> {
-                Log.i(tag, "filter " + Thread.currentThread().getName());
-                return input.length() >= 3;
-            })
-
+            .filter(input -> input.length() >= 3)
             .observeOn(Schedulers.io())
+            .map(input -> input.toString().toLowerCase())
 
-            .map(input -> {
-                Log.i(tag, "map " + Thread.currentThread().getName());
-                return input.toString().toLowerCase();
-            })
-
-            .flatMap((Function<String, ObservableSource<?>>) s -> {
-                Log.i(tag, "flatMap " + Thread.currentThread().getName());
+            .flatMap(s -> {
                 String url = "https://api.github.com/search/users?q=" + s;
                 Request request = new Request.Builder().url(url).build();
                 return Observable.just(okHttpClient.newCall(request).execute());
             })
 
-            .cast(Response.class)
-
-            .doOnNext(result -> {
-                Log.i(tag, "doOnNext " + Thread.currentThread().getName());
-                Log.i(tag, String.valueOf(result.body().string()));
-            })
-
+            .map(response -> gson.fromJson(response.body().string(), UserSearchResult.class))
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext(result -> recyclerSearchResults.setAdapter(new SearchResultAdapter(result.getItems())))
             .doOnError(Throwable::printStackTrace)
             .subscribe();
     }

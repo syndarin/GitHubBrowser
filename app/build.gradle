@@ -13,6 +13,11 @@ android {
         versionName "1.0"
     }
     buildTypes {
+
+        debug {
+            debuggable true
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -36,6 +41,9 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
+
+    compile 'com.facebook.stetho:stetho:1.4.2'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
 }
 
 retrolambda {

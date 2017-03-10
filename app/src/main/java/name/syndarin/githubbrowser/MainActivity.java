@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.io.IOException;
@@ -35,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        okHttpClient = new OkHttpClient();
+        okHttpClient = new OkHttpClient.Builder()
+            .addNetworkInterceptor(new StethoInterceptor())
+            .build();
 
         RxTextView.textChanges(editSearchInput)
             .subscribeOn(Schedulers.io())
@@ -61,11 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
             .cast(Response.class)
 
-            .observeOn(AndroidSchedulers.mainThread())
-
             .doOnNext(result -> {
                 Log.i(tag, "doOnNext " + Thread.currentThread().getName());
-                Log.i(tag, String.valueOf(result.body().toString()));
+                Log.i(tag, String.valueOf(result.body().string()));
             })
 
             .doOnError(Throwable::printStackTrace)

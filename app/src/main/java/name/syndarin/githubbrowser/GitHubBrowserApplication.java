@@ -6,6 +6,8 @@ import com.facebook.stetho.Stetho;
 
 import java.io.File;
 
+import name.syndarin.githubbrowser.dependency.DaggerNetworkComponent;
+import name.syndarin.githubbrowser.dependency.NetworkComponent;
 import name.syndarin.githubbrowser.logging.FileTree;
 import timber.log.Timber;
 
@@ -15,12 +17,20 @@ import timber.log.Timber;
 
 public class GitHubBrowserApplication extends Application {
 
+    private NetworkComponent networkComponent;
+
     @Override
     public void onCreate() {
         super.onCreate();
         Stetho.initializeWithDefaults(this);
 
+        networkComponent = DaggerNetworkComponent.builder().build();
+
         File logFile = new File(getFilesDir(), "log.txt");
         Timber.plant(new FileTree(logFile), new Timber.DebugTree());
+    }
+
+    public NetworkComponent getNetworkComponent() {
+        return networkComponent;
     }
 }

@@ -14,7 +14,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
     public static final String EXTRA_USER_PROFILE_URL = "extra-user-profile-url";
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

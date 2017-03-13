@@ -1,17 +1,16 @@
-package name.syndarin.githubbrowser;
+package name.syndarin.githubbrowser.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.jakewharton.rxbinding2.widget.RxTextView;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +18,8 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import name.syndarin.githubbrowser.activities.UserProfileActivity;
+import name.syndarin.githubbrowser.GitHubBrowserApplication;
+import name.syndarin.githubbrowser.R;
 import name.syndarin.githubbrowser.adapters.SearchResultAdapter;
 import name.syndarin.githubbrowser.entities.UserSearchResult;
 import name.syndarin.githubbrowser.entities.UserSearchResultItem;
@@ -35,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.recycler_search_results)
     RecyclerView recyclerSearchResults;
 
-    OkHttpClient okHttpClient;
+    @Inject OkHttpClient okHttpClient;
+
+    @Inject Gson gson;
 
     Observable inputSearchTextObservable;
     Disposable inputSearchTextSubscription;
@@ -50,17 +52,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        okHttpClient = new OkHttpClient.Builder()
-                .addNetworkInterceptor(new StethoInterceptor())
-                .build();
+        ((GitHubBrowserApplication) getApplication()).getNetworkComponent().inject(this);
 
         adapter = new SearchResultAdapter();
         recyclerSearchResults.setAdapter(adapter);
 
         recyclerSearchResults.setLayoutManager(new LinearLayoutManager(this));
-
-        Gson gson = new Gson();
 
         inputSearchTextObservable = RxTextView.textChanges(editSearchInput)
                 .filter(input -> input.length() >= 3)

@@ -2,17 +2,23 @@ package name.syndarin.githubbrowser.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jakewharton.rxbinding2.view.RxView;
+
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.functions.Consumer;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 import name.syndarin.githubbrowser.R;
-import name.syndarin.githubbrowser.entities.UserSearchResult;
 import name.syndarin.githubbrowser.entities.UserSearchResultItem;
 
 /**
@@ -26,20 +32,23 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         @BindView(R.id.text_username)
         TextView textUsername;
 
-        public SearchResultItemHolder(View itemView) {
+        SearchResultItemHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindData(UserSearchResultItem item) {
+        void bindData(UserSearchResultItem item) {
             textUsername.setText(item.getLogin());
+            itemView.setOnClickListener(view -> clickEventsSubject.onNext(item));
         }
     }
 
-    private List<UserSearchResultItem> items;
+    private PublishSubject<UserSearchResultItem> clickEventsSubject;
 
-    public SearchResultAdapter(@NonNull List<UserSearchResultItem> items) {
-        this.items = items;
+    private List<UserSearchResultItem> items = Collections.emptyList();
+
+    public SearchResultAdapter() {
+        this.clickEventsSubject = PublishSubject.create();
     }
 
     @Override
@@ -56,5 +65,14 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public Subject<UserSearchResultItem> getClickEventsSubject() {
+        return clickEventsSubject;
+    }
+
+    public void updateDataSet(@NonNull List<UserSearchResultItem> items) {
+        this.items = items;
+        notifyDataSetChanged();
     }
 }

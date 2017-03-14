@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import javax.inject.Inject;
@@ -35,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.recycler_search_results)
     RecyclerView recyclerSearchResults;
 
+    @BindView(R.id.buttonSearch)
+    Button buttonSearch;
+
     @Inject OkHttpClient okHttpClient;
 
     @Inject Gson gson;
@@ -59,7 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerSearchResults.setLayoutManager(new LinearLayoutManager(this));
 
+        Observable<CharSequence> buttonSearchClickObservable = RxView.clicks(buttonSearch)
+                .flatMap(s -> Observable.just(editSearchInput.getText().toString()));
+
         inputSearchTextObservable = RxTextView.textChanges(editSearchInput)
+                .mergeWith(buttonSearchClickObservable)
                 .filter(input -> input.length() >= 3)
                 .observeOn(Schedulers.io())
                 .map(input -> input.toString().toLowerCase())

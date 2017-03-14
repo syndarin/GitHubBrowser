@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GitHubBrowser</string>
+    <string name="label_button_search">Search</string>
 </resources>

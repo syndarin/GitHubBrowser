@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import name.syndarin.githubbrowser.activities.MainActivity;
+import name.syndarin.githubbrowser.activities.UserProfileActivity;
 import okhttp3.OkHttpClient;
 
 /**
@@ -22,5 +23,5 @@ public interface NetworkComponent {
 
     void inject(MainActivity activity);
 
-
+    void inject(UserProfileActivity activity);
 }

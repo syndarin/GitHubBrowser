@@ -2,20 +2,14 @@ package name.syndarin.githubbrowser.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jakewharton.rxbinding2.view.RxView;
-
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 import name.syndarin.githubbrowser.R;
@@ -29,12 +23,11 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     class SearchResultItemHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.text_username)
         TextView textUsername;
 
         SearchResultItemHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            textUsername = (TextView) itemView.findViewById(R.id.text_username);
         }
 
         void bindData(UserSearchResultItem item) {

@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import name.syndarin.githubbrowser.activities.MainActivity;
 import name.syndarin.githubbrowser.activities.UserProfileActivity;
+import name.syndarin.githubbrowser.models.SearchModel;
 import okhttp3.OkHttpClient;
 
 /**
@@ -14,12 +15,10 @@ import okhttp3.OkHttpClient;
  */
 
 @Singleton
-@Component(modules = {NetworkModule.class, ParsingModule.class})
+@Component(modules = {NetworkModule.class, ModelModule.class})
 public interface NetworkComponent {
 
-    OkHttpClient okHttpClient();
-
-    Gson gson();
+    SearchModel searchModel();
 
     void inject(MainActivity activity);
 

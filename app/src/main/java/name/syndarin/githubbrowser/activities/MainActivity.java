@@ -1,21 +1,16 @@
 package name.syndarin.githubbrowser.activities;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.Button;
-import android.widget.EditText;
 
-import com.google.gson.Gson;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -23,26 +18,15 @@ import io.reactivex.schedulers.Schedulers;
 import name.syndarin.githubbrowser.GitHubBrowserApplication;
 import name.syndarin.githubbrowser.R;
 import name.syndarin.githubbrowser.adapters.SearchResultAdapter;
-import name.syndarin.githubbrowser.entities.UserSearchResult;
+import name.syndarin.githubbrowser.databinding.ActivityMainBinding;
 import name.syndarin.githubbrowser.entities.UserSearchResultItem;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
+import name.syndarin.githubbrowser.models.SearchModel;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.edit_username_input)
-    EditText editSearchInput;
-
-    @BindView(R.id.recycler_search_results)
-    RecyclerView recyclerSearchResults;
-
-    @BindView(R.id.buttonSearch)
-    Button buttonSearch;
-
-    @Inject OkHttpClient okHttpClient;
-
-    @Inject Gson gson;
+    @Inject
+    SearchModel searchModel;
 
     Observable inputSearchTextObservable;
     Disposable inputSearchTextSubscription;
@@ -55,31 +39,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
         ((GitHubBrowserApplication) getApplication()).getNetworkComponent().inject(this);
 
         adapter = new SearchResultAdapter();
-        recyclerSearchResults.setAdapter(adapter);
+        binding.recyclerSearchResults.setAdapter(adapter);
+        binding.recyclerSearchResults.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerSearchResults.setLayoutManager(new LinearLayoutManager(this));
+        Observable<CharSequence> buttonSearchClickObservable = RxView.clicks(binding.buttonSearch)
+                .flatMap(s -> Observable.just(binding.editUsernameInput.getText().toString()));
 
-        Observable<CharSequence> buttonSearchClickObservable = RxView.clicks(buttonSearch)
-                .flatMap(s -> Observable.just(editSearchInput.getText().toString()));
-
-        inputSearchTextObservable = RxTextView.textChanges(editSearchInput)
-                .mergeWith(buttonSearchClickObservable)
+        inputSearchTextObservable = RxTextView.textChanges(binding.editUsernameInput)
                 .filter(input -> input.length() >= 3)
+                .mergeWith(buttonSearchClickObservable)
                 .observeOn(Schedulers.io())
                 .map(input -> input.toString().toLowerCase())
-
-                .flatMap(s -> {
-                    String url = "https://api.github.com/search/users?q=" + s;
-                    Request request = new Request.Builder().url(url).build();
-                    return Observable.just(okHttpClient.newCall(request).execute());
-                })
-
-                .map(response -> gson.fromJson(response.body().string(), UserSearchResult.class))
+                .flatMap(s -> searchModel.searchForUsers(s))
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(result -> adapter.updateDataSet(result.getItems()))
                 .doOnError(Throwable::printStackTrace);

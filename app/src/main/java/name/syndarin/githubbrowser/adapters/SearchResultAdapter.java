@@ -1,11 +1,10 @@
 package name.syndarin.githubbrowser.adapters;
 
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +12,9 @@ import java.util.List;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 import name.syndarin.githubbrowser.R;
+import name.syndarin.githubbrowser.databinding.ItemSearchUserResultBinding;
 import name.syndarin.githubbrowser.entities.UserSearchResultItem;
+import name.syndarin.githubbrowser.viewmodels.SearchResultItemViewModel;
 
 /**
  * Created by vtiahotenkov on 10.03.17.
@@ -23,15 +24,20 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     class SearchResultItemHolder extends RecyclerView.ViewHolder {
 
-        TextView textUsername;
+        ItemSearchUserResultBinding binding;
+        SearchResultItemViewModel viewModel;
 
-        SearchResultItemHolder(View itemView) {
-            super(itemView);
-            textUsername = (TextView) itemView.findViewById(R.id.text_username);
+        SearchResultItemHolder(ItemSearchUserResultBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            this.viewModel = new SearchResultItemViewModel();
+            binding.setViewModel(viewModel);
         }
 
         void bindData(UserSearchResultItem item) {
-            textUsername.setText(item.getLogin());
+            viewModel.setItem(item);
+            binding.invalidateAll();
+
             itemView.setOnClickListener(view -> clickEventsSubject.onNext(item));
         }
     }
@@ -46,8 +52,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     @Override
     public SearchResultAdapter.SearchResultItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_user_result, parent, false);
-        return new SearchResultItemHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        ItemSearchUserResultBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_search_user_result, parent, false);
+        return new SearchResultItemHolder(binding);
     }
 
     @Override

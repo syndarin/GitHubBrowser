@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">GitHubBrowser</string>
     <string name="label_button_search">Search</string>
+
+    <string name="user_profile_followers_template">%1$d followers</string>
+    <string name="user_profile_following_template">%1$d following</string>
+    <string name="user_profile_repos_template">%1$d repos</string>
+    <string name="user_profile_gists_template">%1$d gists</string>
 </resources>

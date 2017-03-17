@@ -3,9 +3,11 @@ package name.syndarin.githubbrowser.models;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
+import name.syndarin.githubbrowser.entities.ActivityItem;
 import name.syndarin.githubbrowser.entities.User;
 import name.syndarin.githubbrowser.entities.UserSearchResult;
 import okhttp3.Call;
@@ -44,5 +46,9 @@ public class SearchModel {
         .subscribeOn(Schedulers.io())
         .map(response -> response.body().string())
         .map(userAsJson -> gson.fromJson(userAsJson, User.class));
+    }
+
+    public Observable<List<ActivityItem>> getUserActivity() {
+        return Observable.empty();
     }
 }

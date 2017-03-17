@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -18,6 +19,7 @@
             android:id="@+id/imageUserAvatar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:imageUrl="@{viewModel.avatarUrl}"
             tools:src="@mipmap/ic_launcher"/>
 
         <TextView
@@ -25,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="@{viewModel.username}"
             tools:text="John Doe"/>
 
     </LinearLayout>

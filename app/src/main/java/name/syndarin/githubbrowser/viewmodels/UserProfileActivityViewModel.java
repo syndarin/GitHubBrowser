@@ -1,6 +1,7 @@
 package name.syndarin.githubbrowser.viewmodels;
 
 import android.content.Context;
+import android.databinding.ObservableField;
 
 import com.bumptech.glide.Glide;
 
@@ -28,14 +29,19 @@ public class UserProfileActivityViewModel {
     Observable observableContentLoader;
     Disposable subscriptionContentLoader;
 
+    public ObservableField<String> username;
+    public ObservableField<String> avatarUrl;
+
     public UserProfileActivityViewModel(ActivityUserProfileBinding binding, String url) {
+        username = new ObservableField<>();
+        avatarUrl = new ObservableField<>();
 
         observableContentLoader = Observable.defer(() -> searchModel.getUserProfile(url))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(user -> {
-                    binding.textUserName.setText(user.getName());
-                    Glide.with(context).load(user.getAvatarUrl()).into(binding.imageUserAvatar);
+                    username.set(user.getName());
+                    avatarUrl.set(user.getAvatarUrl());
                 });
     }
 

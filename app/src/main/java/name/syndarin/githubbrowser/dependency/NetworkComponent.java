@@ -8,6 +8,7 @@ import dagger.Component;
 import name.syndarin.githubbrowser.activities.MainActivity;
 import name.syndarin.githubbrowser.activities.UserProfileActivity;
 import name.syndarin.githubbrowser.models.SearchModel;
+import name.syndarin.githubbrowser.viewmodels.MainActivityViewModel;
 import okhttp3.OkHttpClient;
 
 /**
@@ -20,7 +21,7 @@ public interface NetworkComponent {
 
     SearchModel searchModel();
 
-    void inject(MainActivity activity);
+    void inject(MainActivityViewModel activity);
 
     void inject(UserProfileActivity activity);
 }

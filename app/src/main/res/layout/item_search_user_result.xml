@@ -29,8 +29,7 @@
                 android:layout_width="48dip"
                 android:layout_height="48dip"
                 app:imageUrl="@{viewModel.userAvatar}"
-                tools:src="@mipmap/ic_launcher"
-                />
+                tools:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:id="@+id/text_username"

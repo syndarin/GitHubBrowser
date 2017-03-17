@@ -1,5 +1,7 @@
 package name.syndarin.githubbrowser.viewmodels;
 
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import name.syndarin.githubbrowser.activities.UserProfileActivity;
 import name.syndarin.githubbrowser.adapters.SearchResultAdapter;
 import name.syndarin.githubbrowser.databinding.ActivityMainBinding;
 import name.syndarin.githubbrowser.entities.UserSearchResultItem;
@@ -34,6 +37,9 @@ public class MainActivityViewModel {
 
     @Inject
     SearchModel searchModel;
+
+    @Inject
+    Context context;
 
     SearchResultAdapter adapter;
 
@@ -62,9 +68,9 @@ public class MainActivityViewModel {
         itemClickObservable = adapter.getClickEventsSubject()
                 .doOnNext(user -> {
                     Timber.d("Start profile activity for user %s", user.getLogin());
-                    /*Intent intent = new Intent(this, UserProfileActivity.class);
+                    Intent intent = new Intent(context, UserProfileActivity.class);
                     intent.putExtra(UserProfileActivity.EXTRA_USER_PROFILE_URL, user.getUrl());
-                    startActivity(intent);*/
+                    context.startActivity(intent);
                 });
     }
 

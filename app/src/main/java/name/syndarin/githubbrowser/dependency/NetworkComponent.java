@@ -1,5 +1,7 @@
 package name.syndarin.githubbrowser.dependency;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 
 import javax.inject.Singleton;
@@ -9,6 +11,7 @@ import name.syndarin.githubbrowser.activities.MainActivity;
 import name.syndarin.githubbrowser.activities.UserProfileActivity;
 import name.syndarin.githubbrowser.models.SearchModel;
 import name.syndarin.githubbrowser.viewmodels.MainActivityViewModel;
+import name.syndarin.githubbrowser.viewmodels.UserProfileActivityViewModel;
 import okhttp3.OkHttpClient;
 
 /**
@@ -16,12 +19,14 @@ import okhttp3.OkHttpClient;
  */
 
 @Singleton
-@Component(modules = {NetworkModule.class, ModelModule.class})
+@Component(modules = {NetworkModule.class, ModelModule.class, ApplicationModule.class})
 public interface NetworkComponent {
 
     SearchModel searchModel();
 
-    void inject(MainActivityViewModel activity);
+    Context context();
 
-    void inject(UserProfileActivity activity);
+    void inject(MainActivityViewModel viewModel);
+
+    void inject(UserProfileActivityViewModel viewModel);
 }

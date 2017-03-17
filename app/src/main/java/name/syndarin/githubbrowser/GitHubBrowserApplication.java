@@ -6,6 +6,7 @@ import com.facebook.stetho.Stetho;
 
 import java.io.File;
 
+import name.syndarin.githubbrowser.dependency.ApplicationModule;
 import name.syndarin.githubbrowser.dependency.DaggerNetworkComponent;
 import name.syndarin.githubbrowser.dependency.NetworkComponent;
 import name.syndarin.githubbrowser.logging.FileTree;
@@ -24,7 +25,7 @@ public class GitHubBrowserApplication extends Application {
         super.onCreate();
         Stetho.initializeWithDefaults(this);
 
-        networkComponent = DaggerNetworkComponent.builder().build();
+        networkComponent = DaggerNetworkComponent.builder().applicationModule(new ApplicationModule(this)).build();
 
         File logFile = new File(getFilesDir(), "log.txt");
         Timber.plant(new FileTree(logFile), new Timber.DebugTree());

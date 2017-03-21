@@ -26,7 +26,7 @@ import timber.log.Timber;
  * Created by vtiahotenkov on 15.03.17.
  */
 
-public class SearchFragmentViewModel {
+public class FragmentSearchViewModel {
 
     @BindingAdapter({"adapter"})
     public static void setAdapter(RecyclerView view, RecyclerView.Adapter adapter) {
@@ -49,7 +49,7 @@ public class SearchFragmentViewModel {
     Observable<UserSearchResultItem> itemClickObservable;
     Disposable itemClickSubscription;
 
-    public SearchFragmentViewModel(BindingSearchFragment binding) {
+    public FragmentSearchViewModel(BindingSearchFragment binding) {
         adapter = new SearchResultAdapter();
 
         Observable<CharSequence> buttonSearchClickObservable = RxView.clicks(binding.buttonSearch)

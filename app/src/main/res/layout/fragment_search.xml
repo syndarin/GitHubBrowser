@@ -6,7 +6,7 @@
     <data class="BindingSearchFragment">
         <variable
             name="viewModel"
-            type="name.syndarin.githubbrowser.viewmodels.SearchFragmentViewModel" />
+            type="name.syndarin.githubbrowser.viewmodels.FragmentSearchViewModel" />
     </data>
 
     <RelativeLayout

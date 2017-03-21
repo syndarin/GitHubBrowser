@@ -12,7 +12,7 @@ import name.syndarin.githubbrowser.entities.UserSearchResultItem;
  * Created by vtiahotenkov on 16.03.17.
  */
 
-public class SearchResultItemViewModel {
+public class ItemSearchResultViewModel {
 
     @BindingAdapter({"imageUrl"})
     public static void loadAvatar(ImageView target, String url) {

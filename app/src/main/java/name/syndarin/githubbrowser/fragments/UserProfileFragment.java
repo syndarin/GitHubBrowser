@@ -10,22 +10,22 @@ import android.view.ViewGroup;
 
 import name.syndarin.githubbrowser.GitHubBrowserApplication;
 import name.syndarin.githubbrowser.R;
-import name.syndarin.githubbrowser.databinding.BindingSearchFragment;
-import name.syndarin.githubbrowser.viewmodels.FragmentSearchViewModel;
+import name.syndarin.githubbrowser.databinding.BindingUserProfileFragment;
+import name.syndarin.githubbrowser.viewmodels.FragmentUserProfileViewModel;
 
 /**
  * Created by syndarin on 3/21/17.
  */
 
-public class SearchFragment extends Fragment {
+public class UserProfileFragment extends Fragment {
 
-    private FragmentSearchViewModel viewModel;
+    private FragmentUserProfileViewModel viewModel;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        BindingSearchFragment binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
-        viewModel = new FragmentSearchViewModel(binding);
+        BindingUserProfileFragment binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_profile, container, false);
+        viewModel = new FragmentUserProfileViewModel("https://api.github.com/users/octocat"); //TODO fix asap
         binding.setViewModel(viewModel);
         return binding.getRoot();
     }

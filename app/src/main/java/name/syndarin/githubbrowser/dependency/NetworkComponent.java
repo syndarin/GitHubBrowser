@@ -6,8 +6,8 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import name.syndarin.githubbrowser.models.SearchModel;
-import name.syndarin.githubbrowser.viewmodels.SearchFragmentViewModel;
-import name.syndarin.githubbrowser.viewmodels.UserProfileActivityViewModel;
+import name.syndarin.githubbrowser.viewmodels.FragmentSearchViewModel;
+import name.syndarin.githubbrowser.viewmodels.FragmentUserProfileViewModel;
 
 /**
  * Created by vtiahotenkov on 13.03.17.
@@ -21,7 +21,7 @@ public interface NetworkComponent {
 
     Context context();
 
-    void inject(SearchFragmentViewModel viewModel);
+    void inject(FragmentSearchViewModel viewModel);
 
-    void inject(UserProfileActivityViewModel viewModel);
+    void inject(FragmentUserProfileViewModel viewModel);
 }

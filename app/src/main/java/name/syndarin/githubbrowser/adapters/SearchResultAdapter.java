@@ -14,7 +14,7 @@ import io.reactivex.subjects.Subject;
 import name.syndarin.githubbrowser.R;
 import name.syndarin.githubbrowser.databinding.ItemSearchUserResultBinding;
 import name.syndarin.githubbrowser.entities.UserSearchResultItem;
-import name.syndarin.githubbrowser.viewmodels.SearchResultItemViewModel;
+import name.syndarin.githubbrowser.viewmodels.ItemSearchResultViewModel;
 
 /**
  * Created by vtiahotenkov on 10.03.17.
@@ -25,12 +25,12 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     class SearchResultItemHolder extends RecyclerView.ViewHolder {
 
         ItemSearchUserResultBinding binding;
-        SearchResultItemViewModel viewModel;
+        ItemSearchResultViewModel viewModel;
 
         SearchResultItemHolder(ItemSearchUserResultBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            this.viewModel = new SearchResultItemViewModel();
+            this.viewModel = new ItemSearchResultViewModel();
             binding.setViewModel(viewModel);
         }
 

@@ -11,14 +11,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import name.syndarin.githubbrowser.R;
-import name.syndarin.githubbrowser.databinding.ActivityUserProfileBinding;
 import name.syndarin.githubbrowser.models.SearchModel;
 
 /**
  * Created by vtiahotenkov on 17.03.17.
  */
 
-public class UserProfileActivityViewModel extends BaseObservable {
+public class FragmentUserProfileViewModel extends BaseObservable {
 
     @Inject
     SearchModel searchModel;
@@ -37,7 +36,7 @@ public class UserProfileActivityViewModel extends BaseObservable {
     public ObservableField<String> reposCount;
     public ObservableField<String> gistsCount;
 
-    public UserProfileActivityViewModel(ActivityUserProfileBinding binding, String url) {
+    public FragmentUserProfileViewModel(String url) {
         username = new ObservableField<>();
         avatarUrl = new ObservableField<>();
         followersCount = new ObservableField<>();

@@ -1,67 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="name.syndarin.githubbrowser.viewmodels.UserProfileActivityViewModel"/>
-    </data>
-
-    <LinearLayout
+    <fragment
+        android:id="@+id/fragment_user_profile"
+        class="name.syndarin.githubbrowser.fragments.UserProfileFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"/>
 
-        <ImageView
-            android:id="@+id/image_user_avatar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:imageUrl="@{viewModel.avatarUrl}"
-            tools:src="@mipmap/ic_launcher"/>
-
-        <TextView
-            android:id="@+id/text_user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@{viewModel.username}"
-            tools:text="John Doe"/>
-
-        <TextView
-            android:id="@+id/text_followers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.followersCount}"
-            tools:text="150 followers"/>
-
-        <TextView
-            android:id="@+id/text_following"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.followingCount}"
-            tools:text="150 following"/>
-
-        <TextView
-            android:id="@+id/text_repositories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.reposCount}"
-            tools:text="150 repos"/>
-
-        <TextView
-            android:id="@+id/text_gists"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.gistsCount}"
-            tools:text="150 gists"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_activity"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
-
-</layout>
+</FrameLayout>

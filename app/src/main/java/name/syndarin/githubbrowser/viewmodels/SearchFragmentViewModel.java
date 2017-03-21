@@ -17,7 +17,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import name.syndarin.githubbrowser.activities.UserProfileActivity;
 import name.syndarin.githubbrowser.adapters.SearchResultAdapter;
-import name.syndarin.githubbrowser.databinding.ActivityMainBinding;
+import name.syndarin.githubbrowser.databinding.BindingSearchFragment;
 import name.syndarin.githubbrowser.entities.UserSearchResultItem;
 import name.syndarin.githubbrowser.models.SearchModel;
 import timber.log.Timber;
@@ -26,7 +26,7 @@ import timber.log.Timber;
  * Created by vtiahotenkov on 15.03.17.
  */
 
-public class MainActivityViewModel {
+public class SearchFragmentViewModel {
 
     @BindingAdapter({"adapter"})
     public static void setAdapter(RecyclerView view, RecyclerView.Adapter adapter) {
@@ -49,7 +49,7 @@ public class MainActivityViewModel {
     Observable<UserSearchResultItem> itemClickObservable;
     Disposable itemClickSubscription;
 
-    public MainActivityViewModel(ActivityMainBinding binding) {
+    public SearchFragmentViewModel(BindingSearchFragment binding) {
         adapter = new SearchResultAdapter();
 
         Observable<CharSequence> buttonSearchClickObservable = RxView.clicks(binding.buttonSearch)

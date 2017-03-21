@@ -2,17 +2,12 @@ package name.syndarin.githubbrowser.dependency;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-
 import javax.inject.Singleton;
 
 import dagger.Component;
-import name.syndarin.githubbrowser.activities.MainActivity;
-import name.syndarin.githubbrowser.activities.UserProfileActivity;
 import name.syndarin.githubbrowser.models.SearchModel;
-import name.syndarin.githubbrowser.viewmodels.MainActivityViewModel;
+import name.syndarin.githubbrowser.viewmodels.SearchFragmentViewModel;
 import name.syndarin.githubbrowser.viewmodels.UserProfileActivityViewModel;
-import okhttp3.OkHttpClient;
 
 /**
  * Created by vtiahotenkov on 13.03.17.
@@ -26,7 +21,7 @@ public interface NetworkComponent {
 
     Context context();
 
-    void inject(MainActivityViewModel viewModel);
+    void inject(SearchFragmentViewModel viewModel);
 
     void inject(UserProfileActivityViewModel viewModel);
 }

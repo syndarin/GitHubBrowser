@@ -1,7 +1,6 @@
 package name.syndarin.githubbrowser.viewmodels;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +14,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import name.syndarin.githubbrowser.activities.UserProfileActivity;
 import name.syndarin.githubbrowser.adapters.SearchResultAdapter;
 import name.syndarin.githubbrowser.databinding.BindingSearchFragment;
 import name.syndarin.githubbrowser.entities.UserSearchResultItem;

@@ -2,6 +2,7 @@ package name.syndarin.githubbrowser.dependency;
 
 import dagger.Component;
 import name.syndarin.githubbrowser.navigation.Navigator;
+import name.syndarin.githubbrowser.viewmodels.FragmentSearchViewModel;
 import name.syndarin.githubbrowser.viewmodels.FragmentUserProfileViewModel;
 
 /**
@@ -13,6 +14,8 @@ import name.syndarin.githubbrowser.viewmodels.FragmentUserProfileViewModel;
 public interface ActivityComponent {
 
     Navigator navigator();
+
+    void inject(FragmentSearchViewModel viewModel);
 
     void inject(FragmentUserProfileViewModel viewModel);
 

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import name.syndarin.githubbrowser.GitHubBrowserApplication;
 import name.syndarin.githubbrowser.R;
 import name.syndarin.githubbrowser.dependency.ActivityComponent;
+import name.syndarin.githubbrowser.dependency.ActivityModule;
 import name.syndarin.githubbrowser.dependency.DaggerActivityComponent;
 import name.syndarin.githubbrowser.dependency.NetworkComponent;
 
@@ -19,7 +20,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         NetworkComponent networkComponent = ((GitHubBrowserApplication) getApplication()).getNetworkComponent();
-        activityComponent = DaggerActivityComponent.builder().networkComponent(networkComponent).build();
+        activityComponent = DaggerActivityComponent.builder()
+                .networkComponent(networkComponent)
+                .activityModule(new ActivityModule(this))
+                .build();
+
+        activityComponent.navigator().showStartScreen();
     }
 
     public ActivityComponent getActivityComponent() {

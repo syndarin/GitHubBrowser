@@ -21,6 +21,4 @@ public interface NetworkComponent {
 
     Context context();
 
-    void inject(FragmentSearchViewModel viewModel);
-
 }

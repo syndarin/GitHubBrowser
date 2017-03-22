@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import name.syndarin.githubbrowser.GitHubBrowserApplication;
 import name.syndarin.githubbrowser.R;
+import name.syndarin.githubbrowser.activities.MainActivity;
 import name.syndarin.githubbrowser.databinding.BindingSearchFragment;
 import name.syndarin.githubbrowser.viewmodels.FragmentSearchViewModel;
 
@@ -33,8 +33,8 @@ public class SearchFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        GitHubBrowserApplication application = (GitHubBrowserApplication) getActivity().getApplication();
-        application.getNetworkComponent().inject(viewModel);
+        MainActivity activity = (MainActivity) getActivity();
+        activity.getActivityComponent().inject(viewModel);
     }
 
     @Override

@@ -6,6 +6,8 @@ package name.syndarin.githubbrowser.navigation;
 
 public interface Navigator {
 
+    void showStartScreen();
+
     void showUserProfile(String profileUrl);
 
 }

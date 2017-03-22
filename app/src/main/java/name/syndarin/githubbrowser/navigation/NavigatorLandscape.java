@@ -7,29 +7,31 @@ import android.support.v4.app.FragmentTransaction;
 import name.syndarin.githubbrowser.R;
 import name.syndarin.githubbrowser.fragments.SearchFragment;
 import name.syndarin.githubbrowser.fragments.UserProfileFragment;
+import timber.log.Timber;
 
 /**
- * Created by syndarin on 3/21/17.
+ * Created by vtiahotenkov on 22.03.17.
  */
 
-public class NavigatorImpl implements Navigator {
+public class NavigatorLandscape implements Navigator {
 
     private FragmentManager fragmentManager;
 
-    public NavigatorImpl(FragmentManager fragmentManager) {
+    public NavigatorLandscape(FragmentManager fragmentManager) {
+        Timber.d("New instance");
         this.fragmentManager = fragmentManager;
     }
 
     @Override
     public void showStartScreen() {
         SearchFragment fragment = new SearchFragment();
-        replaceFragment(fragment, R.id.fragment_container);
+        replaceFragment(fragment, R.id.fragment_container_primary);
     }
 
     @Override
     public void showUserProfile(String profileUrl) {
         UserProfileFragment fragment = UserProfileFragment.create(profileUrl);
-        replaceFragment(fragment, R.id.fragment_container);
+        replaceFragment(fragment, R.id.fragment_container_primary);
     }
 
     private void replaceFragment(Fragment fragment, int containerId) {

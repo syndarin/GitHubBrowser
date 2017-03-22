@@ -23,5 +23,4 @@ public interface NetworkComponent {
 
     void inject(FragmentSearchViewModel viewModel);
 
-    void inject(FragmentUserProfileViewModel viewModel);
 }

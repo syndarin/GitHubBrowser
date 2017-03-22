@@ -20,6 +20,7 @@ import name.syndarin.githubbrowser.adapters.SearchResultAdapter;
 import name.syndarin.githubbrowser.databinding.BindingSearchFragment;
 import name.syndarin.githubbrowser.entities.UserSearchResultItem;
 import name.syndarin.githubbrowser.models.SearchModel;
+import name.syndarin.githubbrowser.navigation.Navigator;
 import timber.log.Timber;
 
 /**
@@ -40,6 +41,9 @@ public class FragmentSearchViewModel {
 
     @Inject
     Context context;
+
+    @Inject
+    Navigator navigator;
 
     SearchResultAdapter adapter;
 
@@ -68,9 +72,7 @@ public class FragmentSearchViewModel {
         itemClickObservable = adapter.getClickEventsSubject()
                 .doOnNext(user -> {
                     Timber.d("Start profile activity for user %s", user.getLogin());
-                    Intent intent = new Intent(context, UserProfileActivity.class);
-                    intent.putExtra(UserProfileActivity.EXTRA_USER_PROFILE_URL, user.getUrl());
-                    context.startActivity(intent);
+                    navigator.showUserProfile(user.getUrl());
                 });
     }
 

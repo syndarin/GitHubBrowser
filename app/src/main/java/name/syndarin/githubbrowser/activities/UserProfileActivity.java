@@ -13,9 +13,7 @@ import name.syndarin.githubbrowser.R;
 
 public class UserProfileActivity extends AppCompatActivity {
 
-    public static final String EXTRA_USER_PROFILE_URL = "extra-user-profile-url";
-
-    @Override
+/*    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
@@ -25,10 +23,10 @@ public class UserProfileActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(userProfileUrl)) {
             throw new RuntimeException("Fail fast: user profile url isn't set");
         } else {
-            /*ActivityUserProfileBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_user_profile);
+            *//*ActivityUserProfileBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_user_profile);
             viewModel = new FragmentUserProfileViewModel(binding, userProfileUrl);
             ((GitHubBrowserApplication) getApplication()).getNetworkComponent().inject(viewModel);
-            binding.setViewModel(viewModel);*/
+            binding.setViewModel(viewModel);*//*
         }
-    }
+    }*/
 }

@@ -34,6 +34,11 @@ public class NavigatorPortrait implements Navigator {
         replaceFragment(fragment, R.id.fragment_container);
     }
 
+    @Override
+    public boolean dispatchBack() {
+        return false;
+    }
+
     private void replaceFragment(Fragment fragment, int containerId) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(containerId, fragment);

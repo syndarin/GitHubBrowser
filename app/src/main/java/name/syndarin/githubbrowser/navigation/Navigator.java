@@ -10,4 +10,6 @@ public interface Navigator {
 
     void showUserProfile(String profileUrl);
 
+    boolean dispatchBack();
+
 }

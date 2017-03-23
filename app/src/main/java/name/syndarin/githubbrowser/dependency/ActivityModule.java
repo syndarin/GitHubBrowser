@@ -34,7 +34,7 @@ public class ActivityModule {
     Navigator getNavigator(){
         boolean isLandscape = appCompatActivity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
         FragmentManager fragmentManager = appCompatActivity.getSupportFragmentManager();
-        return isLandscape ? new NavigatorLandscape(fragmentManager) : new NavigatorPortrait(fragmentManager);
+        return isLandscape ? new NavigatorLandscape(appCompatActivity) : new NavigatorPortrait(fragmentManager);
     }
 
 }

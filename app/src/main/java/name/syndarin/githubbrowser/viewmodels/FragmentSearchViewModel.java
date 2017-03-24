@@ -4,6 +4,8 @@ import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextWatcher;
+import android.view.View;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -19,6 +21,8 @@ import name.syndarin.githubbrowser.databinding.BindingSearchFragment;
 import name.syndarin.githubbrowser.entities.UserSearchResultItem;
 import name.syndarin.githubbrowser.models.SearchModel;
 import name.syndarin.githubbrowser.navigation.Navigator;
+import name.syndarin.githubbrowser.utils.RxClickListener;
+import name.syndarin.githubbrowser.utils.RxInputWatcher;
 import timber.log.Timber;
 
 /**
@@ -26,13 +30,6 @@ import timber.log.Timber;
  */
 
 public class FragmentSearchViewModel {
-
-    @BindingAdapter({"adapter"})
-    public static void setAdapter(RecyclerView view, RecyclerView.Adapter adapter) {
-        Timber.d("Request for adapter!");
-        view.setAdapter(adapter);
-        view.setLayoutManager(new LinearLayoutManager(view.getContext()));
-    }
 
     @Inject
     SearchModel searchModel;
@@ -51,17 +48,22 @@ public class FragmentSearchViewModel {
     Observable<UserSearchResultItem> itemClickObservable;
     Disposable itemClickSubscription;
 
-    public FragmentSearchViewModel(BindingSearchFragment binding) {
+    RxInputWatcher inputWatcher;
+    RxClickListener clickListener;
+
+    public FragmentSearchViewModel() {
         adapter = new SearchResultAdapter();
+        inputWatcher = new RxInputWatcher();
+        clickListener = new RxClickListener();
 
-        Observable<CharSequence> buttonSearchClickObservable = RxView.clicks(binding.buttonSearch)
-                .flatMap(s -> Observable.just(binding.editUsernameInput.getText().toString()));
+        Observable<String> buttonSearchClickObservable = clickListener.getSubject()
+                .flatMap(s -> Observable.just(inputWatcher.getCachedInput()));
 
-        inputSearchTextObservable = RxTextView.textChanges(binding.editUsernameInput)
+        inputSearchTextObservable = inputWatcher.getOnTextChangedSubject()
                 .filter(input -> input.length() >= 3)
                 .mergeWith(buttonSearchClickObservable)
                 .observeOn(Schedulers.io())
-                .map(input -> input.toString().toLowerCase())
+                .map(String::toLowerCase)
                 .flatMap(s -> searchModel.searchForUsers(s))
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(result -> adapter.updateDataSet(result.getItems()))
@@ -76,6 +78,14 @@ public class FragmentSearchViewModel {
 
     public SearchResultAdapter getAdapter() {
         return adapter;
+    }
+
+    public TextWatcher getInputTextWatcher() {
+        return inputWatcher;
+    }
+
+    public View.OnClickListener getClickListener() {
+        return clickListener;
     }
 
     public void onResume() {

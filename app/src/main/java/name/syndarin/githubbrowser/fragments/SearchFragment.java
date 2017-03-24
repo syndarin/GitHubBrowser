@@ -25,7 +25,7 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         BindingSearchFragment binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
-        viewModel = new FragmentSearchViewModel(binding);
+        viewModel = new FragmentSearchViewModel();
         binding.setViewModel(viewModel);
         return binding.getRoot();
     }

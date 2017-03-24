@@ -2,19 +2,23 @@
 <android.support.percent.PercentRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
 
     <FrameLayout
         android:id="@+id/fragment_container_primary"
+        android:layout_width="wrap_content"
+        android:layout_toLeftOf="@+id/fragment_container_secondary"
         app:layout_heightPercent="100%"
-        app:layout_widthPercent="@dimen/primary_container_percentage_expanded"/>
+        />
 
     <FrameLayout
+        android:layout_alignParentRight="true"
         android:id="@+id/fragment_container_secondary"
-        android:layout_toRightOf="@id/fragment_container_primary"
+        android:visibility="gone"
         app:layout_heightPercent="100%"
-        app:layout_widthPercent="@dimen/secondary_container_percentage_shrinked"/>
+        app:layout_widthPercent="60%"/>
 
 </android.support.percent.PercentRelativeLayout>

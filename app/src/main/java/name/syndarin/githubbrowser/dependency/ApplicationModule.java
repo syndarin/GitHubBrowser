@@ -22,7 +22,7 @@ public class ApplicationModule {
     }
 
     @Provides @Singleton
-    Context getContext() {
-        return application.getApplicationContext();
+    Application getApplication() {
+        return application;
     }
 }

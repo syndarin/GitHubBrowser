@@ -1,6 +1,6 @@
 package name.syndarin.githubbrowser.viewmodels;
 
-import android.content.Context;
+import android.app.Application;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
 
@@ -23,7 +23,7 @@ public class FragmentUserProfileViewModel extends BaseObservable {
     SearchModel searchModel;
 
     @Inject
-    Context context;
+    Application application;
 
     Observable observableContentLoader;
     Disposable subscriptionContentLoader;
@@ -50,10 +50,10 @@ public class FragmentUserProfileViewModel extends BaseObservable {
                 .doOnNext(user -> {
                     username.set(user.getName());
                     avatarUrl.set(user.getAvatarUrl());
-                    followersCount.set(context.getString(R.string.user_profile_followers_template, user.getFollowers()));
-                    followingCount.set(context.getString(R.string.user_profile_following_template, user.getFollowing()));
-                    reposCount.set(context.getString(R.string.user_profile_repos_template, user.getPublicRepos()));
-                    gistsCount.set(context.getString(R.string.user_profile_gists_template, user.getPublicGists()));
+                    followersCount.set(application.getString(R.string.user_profile_followers_template, user.getFollowers()));
+                    followingCount.set(application.getString(R.string.user_profile_following_template, user.getFollowing()));
+                    reposCount.set(application.getString(R.string.user_profile_repos_template, user.getPublicRepos()));
+                    gistsCount.set(application.getString(R.string.user_profile_gists_template, user.getPublicGists()));
                 });
     }
 

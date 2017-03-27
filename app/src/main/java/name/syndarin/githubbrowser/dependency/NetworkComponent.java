@@ -1,5 +1,6 @@
 package name.syndarin.githubbrowser.dependency;
 
+import android.app.Application;
 import android.content.Context;
 
 import javax.inject.Singleton;
@@ -19,6 +20,6 @@ public interface NetworkComponent {
 
     SearchModel searchModel();
 
-    Context context();
+    Application application();
 
 }

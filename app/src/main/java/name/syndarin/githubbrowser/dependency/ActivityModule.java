@@ -31,6 +31,12 @@ public class ActivityModule {
 
     @Provides
     @ActivityScope
+    AppCompatActivity getActivity() {
+        return appCompatActivity;
+    }
+
+    @Provides
+    @ActivityScope
     Navigator getNavigator(){
         boolean isLandscape = appCompatActivity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
         FragmentManager fragmentManager = appCompatActivity.getSupportFragmentManager();

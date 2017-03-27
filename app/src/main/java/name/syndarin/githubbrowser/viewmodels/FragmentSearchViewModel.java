@@ -35,9 +35,6 @@ public class FragmentSearchViewModel {
     SearchModel searchModel;
 
     @Inject
-    Context context;
-
-    @Inject
     Navigator navigator;
 
     SearchResultAdapter adapter;
